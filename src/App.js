@@ -1,12 +1,17 @@
 import Navbar from './components/Navbar'
 import Carousel from './components/Carousel'
-import './style.css'
+import SignUp from "./components/SignUp";
 
 function App() {
+  let details = {
+    projectName: 'React App',
+    name: 'Subodh'
+  }
   return (
     <div>
-      <Navbar />
+      <Navbar details={details}/>
       <Carousel />
+      <SignUp />
     </div>
   );
 }
