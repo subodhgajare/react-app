@@ -1,36 +1,55 @@
-import carouselImage1 from '../images/carousel/image1.jpg'
-import carouselImage2 from '../images/carousel/image2.jpg'
-import carouselImage3 from '../images/carousel/image3.jpg'
+import React from 'react'
 
-function Carousel() {
-  return (
-    <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-      <div className="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+class Carousel extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      carouselImages: [
+        "images/carousel/image1.jpg",
+        "images/carousel/image2.jpg",
+        "images/carousel/image3.jpg",
+      ]
+    }
+  }
+
+  render() {
+    return (
+      <div
+        id="carouselExampleControls"
+        className="carousel slide"
+        data-ride="carousel"
+      >
+        <div className="carousel-inner">
+          {this.state.carouselImages.map((image, index) => {
+            return (
+              <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
+                <img src={process.env.PUBLIC_URL + image} className="d-block w-100" alt="..." />
+              </div>
+            )
+          })}
+        </div>
+        <a
+          className="carousel-control-prev"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="prev"
+        >
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="sr-only">Previous</span>
+        </a>
+        <a
+          className="carousel-control-next"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="next"
+        >
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="sr-only">Next</span>
+        </a>
       </div>
-      <div className="carousel-inner">
-        <div className="carousel-item active">
-          <img src={carouselImage1} className="d-block w-100" alt="..." />
-        </div>
-        <div className="carousel-item">
-          <img src={carouselImage2} className="d-block w-100" alt="..." />
-        </div>
-        <div className="carousel-item">
-          <img src={carouselImage3} className="d-block w-100" alt="..." />
-        </div>
-      </div>
-      <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
-      </button>
-      <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
-      </button>
-    </div>
-  )
+    );
+  }
 }
 
-export default Carousel
+export default Carousel;
