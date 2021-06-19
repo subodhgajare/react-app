@@ -1,33 +1,49 @@
-import React, {useEffect, useState} from 'react'
-import Cake from './Cake'
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { getAllCakes, getCakesBySearch } from '../apis/Api';
+import { Link } from "react-router-dom";
+import Cake from './Cake';
+import Loader from './Loader';
 
-function CakeList() {
-    var [cakes, setCakes] = useState([]);
+function CakeList(props) {
+  var [cakes, setCakes] = useState();
 
-    useEffect(() => {
-        axios({
-            method: 'GET',
-            url: 'https://apibyashu.herokuapp.com/api/allcakes',
-        }).then(res => {
-            setCakes(res.data.data);
-        });
-    }, []);
+  useEffect(() => {
+    if (props.search) {
+      getCakesBySearch(props.search).then(res => {
+        setCakes(res.data);
+      })
+    } else {
+      getAllCakes().then(res => {
+        setCakes(res.data);
+      });
+    }
+  }, [props.search]);
 
-    return (
-        <section className="mt-3">
-            <div className="card card-info">
-                <div className="card-header">
-                    <h3 className="card-title text-center">Cakes</h3>
-                </div>
-                <div className="card-body">
-                    <div className="row row-cols-5">
-                        {cakes.map((cake, index) => <Cake cake={cake} key={index} />)}
-                    </div>
-                </div>
+  return (
+    <section>
+      <div className="container">
+        <div className="breadcrumbs">
+          <ol className="breadcrumb">
+            <li><Link to="/">Home</Link></li>
+            <li className="active">Shop</li>
+          </ol>
+        </div>
+        {!cakes && <Loader text="Please wait loading cakes..." />}
+        {
+          cakes &&
+          <div className="row">
+            <div className="col-sm-12 padding-right">
+              <div className="features_items">
+                <h2 className="title text-center">Cakes</h2>
+                {cakes.length > 0 && cakes.map((cake, index) => <Cake cake={cake} key={index} />)}
+                {cakes.length === 0 && <h2 className="text-center m-5">No cakes found.</h2>}
+              </div>
             </div>
-        </section>
-    )
+          </div>
+        }
+      </div>
+    </section>
+  )
 }
 
 export default CakeList

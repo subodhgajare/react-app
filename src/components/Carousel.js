@@ -1,55 +1,45 @@
 import React from 'react'
 
-class Carousel extends React.Component {
-  constructor(props) {
-    super(props)
+function Carousel() {
+  let carouselImages = [
+    "images/carousel/image1.jpg",
+    "images/carousel/image2.jpg",
+    "images/carousel/image3.jpg",
+  ];
 
-    this.state = {
-      carouselImages: [
-        "images/carousel/image1.jpg",
-        "images/carousel/image2.jpg",
-        "images/carousel/image3.jpg",
-      ]
-    }
-  }
-
-  render() {
-    return (
-      <div
-        id="carouselExampleControls"
-        className="carousel slide"
-        data-ride="carousel"
-      >
-        <div className="carousel-inner">
-          {this.state.carouselImages.map((image, index) => {
-            return (
-              <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
-                <img src={process.env.PUBLIC_URL + image} className="d-block w-100" alt="..." />
+  return (
+    <section id="slider">
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div id="slider-carousel" className="carousel slide" data-ride="carousel">
+              <ol className="carousel-indicators">
+                <li data-target="#slider-carousel" data-slide-to="0" className="active"></li>
+                <li data-target="#slider-carousel" data-slide-to="1"></li>
+                <li data-target="#slider-carousel" data-slide-to="2"></li>
+              </ol>
+              <div className="carousel-inner">
+                {carouselImages.map((item, index) =>
+                  <div className={`item ${index === 0 ? 'active' : ''}`} key={index}>
+                    <div className="col-sm-12">
+                      <img src={item} className="carousel-cake img-responsive" alt="" />
+                      <img src="/images/home/pricing.png"  className="pricing" alt="" />
+                    </div>
+                  </div>
+                )}
               </div>
-            )
-          })}
+              <a href="#slider-carousel" className="left control-carousel hidden-xs" data-slide="prev">
+                <i className="fa fa-angle-left"></i>
+              </a>
+              <a href="#slider-carousel" className="right control-carousel hidden-xs" data-slide="next">
+                <i className="fa fa-angle-right"></i>
+              </a>
+            </div>
+          </div>
         </div>
-        <a
-          className="carousel-control-prev"
-          href="#carouselExampleControls"
-          role="button"
-          data-slide="prev"
-        >
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a
-          className="carousel-control-next"
-          href="#carouselExampleControls"
-          role="button"
-          data-slide="next"
-        >
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-        </a>
       </div>
-    );
-  }
+    </section>
+  );
 }
 
 export default Carousel;
